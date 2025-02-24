@@ -1,0 +1,33 @@
+---
+
+
+- hosts: all
+  tasks:
+
+
+  - name: update repository
+    dnf:
+      update_cache: true
+
+  - name: install apache
+    dnf:
+      name: httpd
+      state: latest
+
+  - name: install php
+    dnf:
+      name: php
+      state: latest
+
+  - name: allow http in firewall
+    firewalld:
+      permanent: true
+      service: http
+      immediate: true
+      state: enabled
+
+  - name: start and enable http service
+    service:
+      enabled: true
+      name: httpd
+      state: started
